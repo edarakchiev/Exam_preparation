@@ -13,7 +13,7 @@ while females and males:
     elif current_female % 25 == 0:
         females.popleft()
         continue
-    elif current_female == current_male:
+    if current_female == current_male:
         males.pop()
         females.popleft()
         matches_count += 1
