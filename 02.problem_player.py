@@ -1,74 +1,66 @@
-def matrix_init(n):
+def matrix_init(num):
     m = []
-    for _ in range(n):
-        current_row = [el for el in input()]
-        m.append(current_row)
+    for _ in range(num):
+        current_r = [el for el in input()]
+        m.append(current_r)
     return m
 
 
-def check_player_position(m, n):
-    for r in range(n):
-        for c in range(n):
+def player_position(m, num):
+    for r in range(num):
+        for c in range(num):
             if m[r][c] == "P":
                 return r, c
 
 
-text = [ch for ch in input()]
-size = int(input())
-matrix = matrix_init(size)
-commands_number = int(input())
-player_row, player_col = check_player_position(matrix, size)
+text = input()
+n = int(input())
+matrix = matrix_init(n)
+command_number = int(input())
+current_row, current_col = player_position(matrix, n)
 
-for _ in range(commands_number):
+for _ in range(command_number):
     command = input()
     if command == "up":
-        player_row -= 1
-        if player_row >= 0:
-            if matrix[player_row][player_col].isalpha():
-                alpha = matrix[player_row][player_col]
-                text.append(alpha)
-            matrix[player_row][player_col] = "P"
-            matrix[player_row+1][player_col] = "-"
+
+        if current_row > 0:
+            current_row -= 1
+            if matrix[current_row][current_col].isalpha():
+                text += matrix[current_row][current_col]
+            matrix[current_row + 1][current_col] = "-"
         else:
-            text.pop()
-            player_row += 1
+            text = text[:-1]
 
     elif command == "down":
-        player_row += 1
-        if player_row < size:
-            if matrix[player_row][player_col].isalpha():
-                alpha = matrix[player_row][player_col]
-                text.append(alpha)
-            matrix[player_row][player_col] = "P"
-            matrix[player_row-1][player_col] = "-"
+
+        if current_row < n - 1:
+            current_row += 1
+            if matrix[current_row][current_col].isalpha():
+                text += matrix[current_row][current_col]
+            matrix[current_row - 1][current_col] = "-"
         else:
-            text.pop()
-            player_row -= 1
+            text = text[:-1]
 
     elif command == "left":
-        player_col -= 1
-        if player_col >= 0:
-            if matrix[player_row][player_col].isalpha():
-                alpha = matrix[player_row][player_col]
-                text.append(alpha)
-            matrix[player_row][player_col] = "P"
-            matrix[player_row][player_col+1] = "-"
+        if current_col > 0:
+            current_col -= 1
+            if matrix[current_row][current_col].isalpha():
+                text += matrix[current_row][current_col]
+            matrix[current_row][current_col + 1] = "-"
         else:
-            text.pop()
-            player_col += 1
+            text = text[:-1]
 
     elif command == "right":
-        player_col += 1
-        if player_col < size:
-            if matrix[player_row][player_col].isalpha():
-                alpha = matrix[player_row][player_col]
-                text.append(alpha)
-            matrix[player_row][player_col] = "P"
-            matrix[player_row][player_col-1] = "-"
+
+        if current_col < n - 1:
+            current_col += 1
+            if matrix[current_row][current_col].isalpha():
+                text += matrix[current_row][current_col]
+            matrix[current_row][current_col - 1] = "-"
         else:
-            text.pop()
-            player_col -= 1
+            text = text[:-1]
+    matrix[current_row][current_col] = "P"
 
 print(''.join(text))
-for el in matrix:
-    print(''.join(el))
+for row in matrix:
+    print("".join(row))
